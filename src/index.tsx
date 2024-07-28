@@ -170,7 +170,15 @@ export default class VirtualList extends React.PureComponent<Props, State> {
     }
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentDidUpdate(nextProps: Props, prevState: State) {
+    const {offset, scrollChangeReason} = this.state;
+
+//     Warning: componentWillReceiveProps has been renamed, and is not recommended for use. See https://fb.me/react-unsafe-component-lifecycles for details.
+
+// * Move data fetching code or side effects to componentDidUpdate.
+// * If you're updating state whenever props change, refactor your code to use memoization techniques or move it to static getDerivedStateFromProps. Learn more at: https://fb.me/react-derived-state
+// * Rename componentWillReceiveProps to UNSAFE_componentWillReceiveProps to suppress this warning in non-strict mode. In React 17.x, only the UNSAFE_ name will work. To rename all deprecated lifecycles to their new names, you can run `npx react-codemod rename-unsafe-lifecycles` in your project source folder.
+
     const {
       estimatedItemSize,
       itemCount,
@@ -225,10 +233,6 @@ export default class VirtualList extends React.PureComponent<Props, State> {
         scrollChangeReason: SCROLL_CHANGE_REASON.REQUESTED,
       });
     }
-  }
-
-  componentDidUpdate(_: Props, prevState: State) {
-    const {offset, scrollChangeReason} = this.state;
 
     if (
       prevState.offset !== offset &&
